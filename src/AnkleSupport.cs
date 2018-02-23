@@ -16,7 +16,7 @@ namespace AnkleSupport
 
         internal static void Initialize()
         {
-            var sprainedAnkle = GameManager.GetSprainedAnkleComponent();
+            SprainedAnkle sprainedAnkle = GameManager.GetSprainedAnkleComponent();
 
             defaultMoveChance = sprainedAnkle.m_BaseChanceWhenMovingOnSlope;
             defaultFallChance = sprainedAnkle.m_ChanceSprainAfterFall;
@@ -26,7 +26,7 @@ namespace AnkleSupport
         {
             float toughness = getShoesToughness();
 
-            var sprainedAnkle = GameManager.GetSprainedAnkleComponent();
+            SprainedAnkle sprainedAnkle = GameManager.GetSprainedAnkleComponent();
 
             sprainedAnkle.m_BaseChanceWhenMovingOnSlope = defaultMoveChance - toughness * TOUGHNESS_FACTOR;
             sprainedAnkle.m_ChanceSprainAfterFall = defaultFallChance - toughness * TOUGHNESS_FACTOR;
