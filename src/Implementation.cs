@@ -1,17 +1,21 @@
-﻿using UnityEngine;
+﻿using System.Reflection;
+using UnityEngine;
 
 namespace AnkleSupport
 {
-    internal class AnkleSupport
+    public class Implementation
     {
-        private static readonly float TOUGHNESS_FACTOR = 2f;
+        public const string NAME = "Ankle-Support";
+
+        private const float TOUGHNESS_FACTOR = 2f;
 
         private static float defaultFallChance;
         private static float defaultMoveChance;
 
         public static void OnLoad()
         {
-            Debug.Log("[Ankle-Support]: Version " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
+            AssemblyName assemblyName = Assembly.GetExecutingAssembly().GetName();
+            Log("Version " + assemblyName.Version);
         }
 
         internal static void Initialize()
@@ -20,6 +24,17 @@ namespace AnkleSupport
 
             defaultMoveChance = sprainedAnkle.m_BaseChanceWhenMovingOnSlope;
             defaultFallChance = sprainedAnkle.m_ChanceSprainAfterFall;
+        }
+
+        internal static void Log(string message)
+        {
+            Debug.LogFormat("[" + NAME + "] {0}", message);
+        }
+
+        internal static void Log(string message, params object[] parameters)
+        {
+            string preformattedMessage = string.Format("[" + NAME + "] {0}", message);
+            Debug.LogFormat(preformattedMessage, parameters);
         }
 
         internal static void UpdateAnkleSupport()

@@ -9,11 +9,11 @@ namespace AnkleSupport
         {
             try
             {
-                AnkleSupport.Initialize();
+                Implementation.Initialize();
             }
             catch (System.Exception e)
             {
-                HUDMessage.AddMessage("[Ankle-Support]: Could not initialize.");
+                HUDMessage.AddMessage("[" + Implementation.NAME + "] Could not initialize.");
                 UnityEngine.Debug.LogException(e);
             }
         }
@@ -28,11 +28,11 @@ namespace AnkleSupport
             {
                 try
                 {
-                    AnkleSupport.UpdateAnkleSupport();
+                    Implementation.UpdateAnkleSupport();
                 }
                 catch (System.Exception e)
                 {
-                    HUDMessage.AddMessage("[Ankle-Support]: Could not update ankle protection.");
+                    HUDMessage.AddMessage("[" + Implementation.NAME + "] Could not update ankle protection.");
                     UnityEngine.Debug.LogException(e);
                 }
             }
@@ -48,11 +48,11 @@ namespace AnkleSupport
             {
                 try
                 {
-                    AnkleSupport.UpdateAnkleSupport();
+                    Implementation.UpdateAnkleSupport();
                 }
                 catch (System.Exception e)
                 {
-                    HUDMessage.AddMessage("[Ankle-Support]: Could not update ankle protection.");
+                    HUDMessage.AddMessage("[" + Implementation.NAME + "] Could not update ankle protection.");
                     UnityEngine.Debug.LogException(e);
                 }
             }
