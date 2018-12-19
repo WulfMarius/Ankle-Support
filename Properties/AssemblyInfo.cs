@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Ankle-Support")]
-[assembly: AssemblyCopyright("Copyright ©  2018")]
+[assembly: AssemblyCopyright("© 2018 Wulf Marius")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
