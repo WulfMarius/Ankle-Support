@@ -9,6 +9,8 @@ namespace AnkleSupport
 
         private const float TOUGHNESS_FACTOR = 2f;
 
+        private static readonly FieldInfo SPRAINS_MOVE_CHANCE = Harmony.AccessTools.Field(typeof(Sprains), "m_BaseChanceWhenMovingOnSlope");
+
         private static float defaultFallChance;
         private static float defaultMoveChance;
 
@@ -22,7 +24,8 @@ namespace AnkleSupport
         {
             SprainedAnkle sprainedAnkle = GameManager.GetSprainedAnkleComponent();
 
-            defaultMoveChance = sprainedAnkle.m_BaseChanceWhenMovingOnSlope;
+            Sprains sprains = GameManager.GetSprainsComponent();
+            defaultMoveChance = (float) SPRAINS_MOVE_CHANCE.GetValue(sprains);
             defaultFallChance = sprainedAnkle.m_ChanceSprainAfterFall;
         }
 
@@ -39,15 +42,18 @@ namespace AnkleSupport
 
         internal static void UpdateAnkleSupport()
         {
-            float toughness = getShoesToughness();
+            float toughness = GetShoesToughness();
+            float moveChance = defaultMoveChance - toughness * TOUGHNESS_FACTOR;
+            float fallChance = defaultFallChance - toughness * TOUGHNESS_FACTOR;
 
+            Sprains sprains = GameManager.GetSprainsComponent();
             SprainedAnkle sprainedAnkle = GameManager.GetSprainedAnkleComponent();
 
-            sprainedAnkle.m_BaseChanceWhenMovingOnSlope = defaultMoveChance - toughness * TOUGHNESS_FACTOR;
-            sprainedAnkle.m_ChanceSprainAfterFall = defaultFallChance - toughness * TOUGHNESS_FACTOR;
+            SPRAINS_MOVE_CHANCE.SetValue(sprains, moveChance);
+            sprainedAnkle.m_ChanceSprainAfterFall = fallChance;
         }
 
-        private static float getShoesToughness()
+        private static float GetShoesToughness()
         {
             PlayerManager playerManager = GameManager.GetPlayerManagerComponent();
 
