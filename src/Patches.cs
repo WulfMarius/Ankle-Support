@@ -1,4 +1,5 @@
 ﻿using Harmony;
+using UnityEngine;
 
 namespace AnkleSupport
 {
@@ -14,7 +15,7 @@ namespace AnkleSupport
             catch (System.Exception e)
             {
                 HUDMessage.AddMessage("[" + Implementation.NAME + "] Could not initialize.");
-                UnityEngine.Debug.LogException(e);
+                Debug.Log(e.ToString());
             }
         }
     }
@@ -33,7 +34,7 @@ namespace AnkleSupport
                 catch (System.Exception e)
                 {
                     HUDMessage.AddMessage("[" + Implementation.NAME + "] Could not update ankle protection.");
-                    UnityEngine.Debug.LogException(e);
+                    Debug.Log(e.ToString());
                 }
             }
         }
@@ -53,7 +54,7 @@ namespace AnkleSupport
                 catch (System.Exception e)
                 {
                     HUDMessage.AddMessage("[" + Implementation.NAME + "] Could not update ankle protection.");
-                    UnityEngine.Debug.LogException(e);
+                    Debug.Log(e.ToString());
                 }
             }
         }

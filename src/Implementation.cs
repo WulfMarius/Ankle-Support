@@ -1,43 +1,29 @@
-﻿using System.Reflection;
+﻿using MelonLoader;
 using UnityEngine;
 
 namespace AnkleSupport
 {
-    public class Implementation
+    public class Implementation : MelonMod
     {
         public const string NAME = "Ankle-Support";
 
         private const float TOUGHNESS_FACTOR = 2f;
 
-        private static readonly FieldInfo SPRAINS_MOVE_CHANCE = Harmony.AccessTools.Field(typeof(Sprains), "m_BaseChanceWhenMovingOnSlope");
-
         private static float defaultFallChance;
         private static float defaultMoveChance;
 
-        public static void OnLoad()
+        public override void OnApplicationStart()
         {
-            AssemblyName assemblyName = Assembly.GetExecutingAssembly().GetName();
-            Log("Version " + assemblyName.Version);
+            Debug.Log($"[{InfoAttribute.Name}] version {InfoAttribute.Version} loaded!");
         }
 
         internal static void Initialize()
         {
             SprainedAnkle sprainedAnkle = GameManager.GetSprainedAnkleComponent();
-
             Sprains sprains = GameManager.GetSprainsComponent();
-            defaultMoveChance = (float) SPRAINS_MOVE_CHANCE.GetValue(sprains);
+
+            defaultMoveChance = sprains.m_BaseChanceWhenMovingOnSlope;
             defaultFallChance = sprainedAnkle.m_ChanceSprainAfterFall;
-        }
-
-        internal static void Log(string message)
-        {
-            Debug.LogFormat("[" + NAME + "] {0}", message);
-        }
-
-        internal static void Log(string message, params object[] parameters)
-        {
-            string preformattedMessage = string.Format("[" + NAME + "] {0}", message);
-            Debug.LogFormat(preformattedMessage, parameters);
         }
 
         internal static void UpdateAnkleSupport()
@@ -49,7 +35,7 @@ namespace AnkleSupport
             Sprains sprains = GameManager.GetSprainsComponent();
             SprainedAnkle sprainedAnkle = GameManager.GetSprainedAnkleComponent();
 
-            SPRAINS_MOVE_CHANCE.SetValue(sprains, moveChance);
+            sprains.m_BaseChanceWhenMovingOnSlope = moveChance;
             sprainedAnkle.m_ChanceSprainAfterFall = fallChance;
         }
 
