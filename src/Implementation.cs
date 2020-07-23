@@ -9,8 +9,10 @@ namespace AnkleSupport
 
         private const float TOUGHNESS_FACTOR = 2f;
 
-        private static float defaultFallChance;
-        private static float defaultMoveChance;
+        private static float chanceOfWristSprainWhenMoving;
+        private static float ankleBaseFallChance;
+
+        private static float ankleMoveChanceReduction;
 
         public override void OnApplicationStart()
         {
@@ -22,21 +24,19 @@ namespace AnkleSupport
             SprainedAnkle sprainedAnkle = GameManager.GetSprainedAnkleComponent();
             Sprains sprains = GameManager.GetSprainsComponent();
 
-            defaultMoveChance = sprains.m_BaseChanceWhenMovingOnSlope;
-            defaultFallChance = sprainedAnkle.m_ChanceSprainAfterFall;
+            chanceOfWristSprainWhenMoving = sprains.m_ChanceOfWristSprainWhenMoving;
+            ankleBaseFallChance = sprainedAnkle.m_ChanceSprainAfterFall;
+
+            ankleMoveChanceReduction = 0;
         }
 
         internal static void UpdateAnkleSupport()
         {
             float toughness = GetShoesToughness();
-            float moveChance = defaultMoveChance - toughness * TOUGHNESS_FACTOR;
-            float fallChance = defaultFallChance - toughness * TOUGHNESS_FACTOR;
+            float fallChance = ankleBaseFallChance - toughness * TOUGHNESS_FACTOR;
 
-            Sprains sprains = GameManager.GetSprainsComponent();
-            SprainedAnkle sprainedAnkle = GameManager.GetSprainedAnkleComponent();
-
-            sprains.m_BaseChanceWhenMovingOnSlope = moveChance;
-            sprainedAnkle.m_ChanceSprainAfterFall = fallChance;
+            ankleMoveChanceReduction = toughness * TOUGHNESS_FACTOR;
+            GameManager.GetSprainedAnkleComponent().m_ChanceSprainAfterFall = fallChance;
         }
 
         private static float GetShoesToughness()
@@ -50,6 +50,16 @@ namespace AnkleSupport
             }
 
             return gearItem.m_ClothingItem.m_Toughness;
+        }
+
+        internal static bool ShouldRollForWristSprain()
+        {
+            return Utils.RollChance(chanceOfWristSprainWhenMoving);
+        }
+
+        internal static void AdjustAnkleSprainMoveChance(ref float sprainChance)
+        {
+            sprainChance -= ankleMoveChanceReduction;
         }
     }
 }
