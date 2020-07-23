@@ -16,10 +16,7 @@ namespace AnkleSupport
     {
         private static void Postfix(GearItem gi)
         {
-            if (gi.m_ClothingItem != null && gi.m_ClothingItem.m_Region == ClothingRegion.Feet)
-            {
-                Implementation.UpdateAnkleSupport();
-            }
+            Implementation.OnClothingItemChange(gi);
         }
     }
 
@@ -28,10 +25,7 @@ namespace AnkleSupport
     {
         private static void Postfix(GearItem gi)
         {
-            if (gi.m_ClothingItem != null && gi.m_ClothingItem.m_Region == ClothingRegion.Feet)
-            {
-                Implementation.UpdateAnkleSupport();
-            }
+            Implementation.OnClothingItemChange(gi);
         }
     }
 
@@ -43,6 +37,7 @@ namespace AnkleSupport
 
             if (Implementation.ShouldRollForWristSprain())
             {
+                Implementation.AdjustWristSprainMoveChance(ref sprainChance);
                 __instance.m_ChanceOfWristSprainWhenMoving = 100.0f;
             }
             else
