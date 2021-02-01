@@ -17,7 +17,7 @@ namespace AnkleSupport
 
         public override void OnApplicationStart()
         {
-            Debug.Log($"[{InfoAttribute.Name}] version {InfoAttribute.Version} loaded!");
+            Debug.Log($"[{Info.Name}] version {Info.Version} loaded!");
         }
 
         internal static void Initialize()

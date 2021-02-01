@@ -14,5 +14,5 @@ using System.Runtime.InteropServices;
 [assembly: Guid("b2900caa-ead0-4c24-ac05-815d7feff161")]
 [assembly: AssemblyVersion("4.0.0")]
 [assembly: AssemblyFileVersion("4.0.0")]
-[assembly: MelonModInfo(typeof(AnkleSupport.Implementation), "Ankle-Support", "4.0.0", "WulfMarius, zeobviouslyfakeacc")]
-[assembly: MelonModGame("Hinterland", "TheLongDark")]
+[assembly: MelonInfo(typeof(AnkleSupport.Implementation), "Ankle-Support", "4.0.0", "WulfMarius, zeobviouslyfakeacc")]
+[assembly: MelonGame("Hinterland", "TheLongDark")]
