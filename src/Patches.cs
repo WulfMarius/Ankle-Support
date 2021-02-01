@@ -1,4 +1,5 @@
 ﻿using Harmony;
+using UnityEngine;
 
 namespace AnkleSupport
 {
@@ -33,7 +34,7 @@ namespace AnkleSupport
     internal static class Sprains_RollForSprainWhenMoving
     {
         private static void Prefix(Sprains __instance, ref float sprainChance) {
-            if (Utils.IsZero(sprainChance)) return;
+            if (Mathf.Approximately(sprainChance, 0f)) return;
 
             if (Implementation.ShouldRollForWristSprain())
             {
